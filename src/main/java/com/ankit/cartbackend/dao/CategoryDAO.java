@@ -46,7 +46,7 @@ public interface CategoryDAO {
 	
 	//get category by name
 	 
-	public Category getCategoryName(String name);
+	public Category getCategoryByName(String name);
 	
 	
 

@@ -83,9 +83,15 @@ this.sessionFactory = sessionFactory;
 	
      @Transactional
 	public boolean delete(String id) {
-		
-	sessionFactory.getCurrentSession().get(Category.class,id);
-	return false;
+	 try {
+		sessionFactory.getCurrentSession().delete(getCategoryByID(id));
+		return true;
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return false;
+	}
+	
 	}
 		
 	
@@ -100,7 +106,7 @@ this.sessionFactory = sessionFactory;
 		{	
 		// TODO Auto-generated method stub
 		sessionFactory.getCurrentSession().delete(category);
-		return false;
+		return true;
 		}catch(Exception e) {
 	
 			e.printStackTrace();
@@ -108,14 +114,17 @@ this.sessionFactory = sessionFactory;
 		}
 
 	}
-
-	@Transactional
+/*
+ * 
+ * 
+ */
+	
 	public Category getCategoryByID(String id) {
 		
 		//select * from category where id = ?
-	//return (Category)sessionFactory.getCurrentSession().get(Category.class, id);
+	return (Category)sessionFactory.getCurrentSession().get(Category.class, id);
 	
-		return (Category) sessionFactory.getCurrentSession().createQuery("from Category where id = '"+id + "'").uniqueResult();
+		//return (Category) sessionFactory.getCurrentSession().createQuery("from Category where id = '"+id + "'").uniqueResult();
 		//<-----if the id is primary key
 	//definetly u will get the only one result^
 	//sessionFactory.getCurrentSession().createQuery("from Category where id = '"+id + "'").list().get(0);
@@ -124,11 +133,18 @@ this.sessionFactory = sessionFactory;
 	
 	}
 
-  @Transactional
-	public Category getCategoryName(String name) {
-		
-		return (Category) sessionFactory.getCurrentSession().createQuery("from Category where id = '"+name + "'").list().get(0);
+ 
 
-	}
+
+  @Transactional
+public Category getCategoryByName(String name) {
+	  
+	  //select * from category where name = 'mobile'
+	return (Category)sessionFactory.getCurrentSession().createQuery("from Category where id = '"+name + "'").list().get(0);
+}
+
+
+
+
 
 }
